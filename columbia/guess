@@ -1,12 +1,12 @@
 import random
 #make it so if u don't anser correctly it asks again and remove continue and add a if u say quit at all end
-num = 20
+num = 100
 opts = list(range(1, num+1, 1));print(opts)
 x = num//2
 
 run = True
 higher_than = [0]
-lower_than = [21]
+lower_than = [num+1]
 print('use y and n to awnser questions plz.')
 while run: #main loop
     inp = input(f'is it {x}? ').lower()
@@ -47,9 +47,3 @@ else:
 #print(higher_than)
 #print(lower_than)
 #%%
-a = max(higher_than)+1
-b = min(lower_than)
-opts = list(range(a,b))
-print(opts)
-x = len(opts)//2
-# %%
