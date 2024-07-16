@@ -1,0 +1,55 @@
+import random
+#make it so if u don't anser correctly it asks again and remove continue and add a if u say quit at all end
+num = 20
+opts = list(range(1, num+1, 1));print(opts)
+x = num//2
+
+run = True
+higher_than = [0]
+lower_than = [21]
+print('use y and n to awnser questions plz.')
+while run: #main loop
+    inp = input(f'is it {x}? ').lower()
+    if inp == 'y':
+        print(f'yayy! its {x}!')
+        quit()
+    hint = input(f'more or less than {x}? ').lower()
+    if hint == 'more':
+        #print(opts[x:])#guess
+        higher_than.append(x)
+        #x = round((num-x)/2+x)
+    if hint == 'less':
+        #print(opts[:x-1])#guess-1
+        lower_than.append(x)
+        #x = (num-x)//2
+    a = max(higher_than)+1
+    b = min(lower_than)
+    opts = list(range(a,b))
+    print(opts)
+    x = opts[len(opts)//2]
+    inp = input('continue? ')
+    if inp == 'n' or len(opts)<=2:
+        break
+if len(opts) == 2:
+    t = random.randint(0,1)
+    inp = input(f'is it {opts[t]}? ').lower()
+    if inp == 'y':
+        print('\nend')
+    else:
+        print(f'so it must be {opts[t-1]}!')
+        quit()
+elif len(opts) == 1:
+    print(f'print so it must be {opts[0]}!')
+else:
+    print('awww..')
+    quit()
+
+#print(higher_than)
+#print(lower_than)
+#%%
+a = max(higher_than)+1
+b = min(lower_than)
+opts = list(range(a,b))
+print(opts)
+x = len(opts)//2
+# %%
