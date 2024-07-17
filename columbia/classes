@@ -1,0 +1,31 @@
+#%%
+class Person:
+    def __init__(self, name, age, address):
+        self.name = name
+        self.age = age
+        self.address = address
+
+    def change_address(self, new_address):
+        self.address = new_address
+
+    def b_day(self):
+        self.age += 1
+
+person1 = Person(
+    name='Marco',
+    age=15,
+    address='NY'
+)
+
+person2 = Person(
+    name='Will',
+    age=21,
+    address='Bronx'
+)
+
+class Child(Person):
+    def __init__(self, name, age, address, parent):
+        super().__init__(name, age, address)
+        self.parent = parent
+
+# %%

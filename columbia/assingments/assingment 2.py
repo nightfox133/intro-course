@@ -8,16 +8,19 @@ def print_list(list):
         print(list[i])
 for i in range(1, 11, 1):
     print(i)
+print(f'sum = {sum(Nums)}')
 for i in range(len(Names)):
     print(f'Hello, {Names[i]}')
 
-print(f'sum = {sum(Nums)}')
 #%%
 word = 'banana'
 word2 = ""
 for i in range(len(word) - 1, -1, -1):
     word2 += word[i]
 print (word2)
+
+
+
 letters = {}
 for i in range(len(word)):
     if word[i] not in letters:

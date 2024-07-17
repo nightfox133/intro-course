@@ -1,0 +1,44 @@
+#%%
+my_string = 'the fox jumped over the lazzy dog'
+
+def string_op(string, method='capitalize'):
+    if method == 'upper':
+        return string.upper()
+    if method == 'lower':
+        return string.lower()
+    if method == 'title':
+        return string.title()
+    
+print(string_op(my_string))
+
+def tip_calc(bill: float, pres: float, party: int):
+    if pres > 1:
+        pres = pres/100
+    tip = bill + pres
+    total = bill + tip
+    split = total / party
+
+    return total, tip, split
+
+
+bill = {
+    'marco': 14,
+    'raffa': 20,
+    'zoe': 40
+}
+
+def split_calc(bill: dict, pres: float, tax: float):
+    if tax > 1:
+        tax = tax/100
+    total = sum(list(bill.values()))
+    total += tax
+    tax = total * tax
+    total += tax
+    tip = total + pres
+    for i in bill.keys():
+        bill[k] = bill[k] / total
+    
+
+
+
+# %%
