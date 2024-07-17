@@ -1,0 +1,32 @@
+#%%
+#interactive window
+#%%
+
+x = 15
+print(f'(string) {x}') #use vars in string
+
+'''multi line comment'''
+
+
+dict = {     #dict acsses
+    'name': 'marco', 
+    'age': 15
+}
+dict['name']
+#>> 'marco'
+dict.keys[0] 
+#>> 'name'
+
+
+r = ('python')[::-1] #revese string
+
+#.count()
+#.join()
+#.split
+#.upper()
+#.lower()
+#.capitialize()
+#.title()
+
+#sep letters but : list(string)
+
