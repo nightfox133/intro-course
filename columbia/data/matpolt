@@ -1,0 +1,23 @@
+#%%
+import pandas as pd
+import matplotlib.pyplot as plt 
+
+x = [13, 20 ,15, 15, 18, 14] #data
+y = range(len(x))
+names = ['s1','s2','s3','s4','s5','s6']
+
+plt.xticks(y, names) #x item lables
+
+plt.title('my bar graf') #title
+plt.scatter(y, x) #graf
+plt.xlabel('Students')
+plt.ylabel('Age')
+
+#%%
+import numpy as np
+a = np.linspace(10, 14, 5)
+print(a)    
+b = np.arange(1, 6)
+print(b)
+print(np.add(a,b))
+# %%

@@ -1,0 +1,41 @@
+#%%
+import matplotlib.pyplot as plt 
+import pandas as pd
+import numpy as np
+
+#Index(['name', 'mfr', 'type', 'calories', 'protein', 'fat', 'sodium', 'fiber',
+#       'carbo', 'sugars', 'potass', 'vitamins', 'shelf', 'weight', 'cups',
+#       'rating'],
+#      dtype='object')
+
+df = pd.read_csv('cereal.csv')
+df = pd.DataFrame(df)
+df.head() #5 rows full table
+df.describe()
+
+data = df[['calories', 'protein', 'fat', 'sodium', 'fiber',
+       'carbo', 'sugars', 'potass', 'vitamins', 'shelf', 'weight', 'cups',
+       'rating']]
+correlation = data.corr() #just the numarical data
+print(correlation) #type corrolation 
+#plt.matshow(correlation) #plot corr
+#not sure how to find highest corilation bettween 2 diff columns
+
+
+
+#plt.scatter(data['calories'], data['rating'])
+def scatter(x, y):
+    plt.title('my graf') #title
+    plt.scatter(data[y], data[x]) #graf
+    plt.xlabel(y)
+    plt.ylabel(x)
+scatter('calories', 'rating') #find way to scatter whole data
+
+print(df.mfr.value_counts())#number of cerials made by each company
+
+y = range(len(df.mfr))
+plt.xticks(y, df.mfr) #x item lables
+plt.hist(df.mfr) #find a way to make it a bar graf
+
+scatter('calories', 'rating')
+#%%
