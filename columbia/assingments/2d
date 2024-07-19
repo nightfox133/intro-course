@@ -1,0 +1,262 @@
+import pygame
+import sys
+import random
+
+# Constants
+WIDTH = 800
+HEIGHT = 600
+FPS = 60
+
+# Colors
+WHITE = (255, 255, 255)
+RED = (255, 0, 100)
+BLACK = (0, 0, 0)
+SKY_BLUE = (135, 206, 235)
+
+# Player constants
+PLAYER_WIDTH = 20
+PLAYER_HEIGHT = 20
+PLAYER_ACC = 1.0
+PLAYER_JUMP_ACC = 18
+PLAYER_GRAVITY = 0.8
+
+# Zombie constants
+ZOMBIE_WIDTH = 20
+ZOMBIE_HEIGHT = 20
+ZOMBIE_ACC = 0.2
+ZOMBIE_KNOCKBACK = 10
+ZOMBIE_GRAVITY = 1.0  # Gravity for zombie
+
+# Platform constants
+PLATFORM_WIDTH = 200
+PLATFORM_HEIGHT = 20
+PLATFORM_COLOR = (0, 255, 0)
+
+# Initialize Pygame
+pygame.init()
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Simple Platformer Physics Engine")
+clock = pygame.time.Clock()
+
+# Player class
+class Player(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.Surface((PLAYER_WIDTH, PLAYER_HEIGHT))
+        self.image.fill(RED)
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.vel = pygame.math.Vector2(0, 0)
+        self.acc = pygame.math.Vector2(0, 0)
+        self.on_ground = False
+
+    def update(self):
+        self.acc = pygame.math.Vector2(0, PLAYER_GRAVITY)
+
+        keys = pygame.key.get_pressed()
+        if keys[pygame.K_LEFT]:
+            self.acc.x = -PLAYER_ACC
+        if keys[pygame.K_RIGHT]:
+            self.acc.x = PLAYER_ACC
+
+        # Apply friction (not in this example)
+
+        # Equations of motion
+        self.acc += self.vel * -0.12
+        self.vel += self.acc
+        self.rect.x += self.vel.x
+        self.rect.y += self.vel.y
+
+        # Check collisions with the ground
+        if self.rect.bottom >= HEIGHT:
+            self.rect.bottom = HEIGHT
+            self.vel.y = 0
+            self.on_ground = True
+        else:
+            self.on_ground = False
+
+        # Update player position
+        self.rect.x = max(0, self.rect.x)
+        self.rect.x = min(WIDTH - PLAYER_WIDTH, self.rect.x)
+        self.rect.y = max(0, self.rect.y)
+        self.rect.y = min(HEIGHT - PLAYER_HEIGHT, self.rect.y)
+
+    def jump(self):
+        if self.on_ground:
+            self.vel.y = -PLAYER_JUMP_ACC
+            self.on_ground = False  # No longer on ground after jumping
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, RED, self.rect)
+
+    def collide_with_zombie(self, zombie):
+        # Check collision with zombie
+        return self.rect.colliderect(zombie.rect)
+
+    def jump_on_zombie(self, zombie):
+        # Check if player jumps on zombie's head
+        if self.rect.bottom < zombie.rect.centery:  # Player above zombie's center
+            if self.rect.colliderect(zombie.rect):
+                return True
+        return False
+
+# Zombie class
+class Zombie(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        super().__init__()
+        self.image = pygame.Surface((ZOMBIE_WIDTH, ZOMBIE_HEIGHT))
+        self.image.fill(BLACK)
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.vel = pygame.math.Vector2(0, 0)
+        self.acc = pygame.math.Vector2(0, 0)
+        self.respawn()
+
+    def update(self, player, platforms):
+        # Follow the player horizontally
+        if self.rect.centerx < player.rect.centerx:
+            self.acc.x = ZOMBIE_ACC
+        elif self.rect.centerx > player.rect.centerx:
+            self.acc.x = -ZOMBIE_ACC
+        else:
+            self.acc.x = 0
+
+        # Apply gravity
+        self.acc.y = ZOMBIE_GRAVITY
+
+        self.acc += self.vel * -0.12
+        self.vel += self.acc
+
+        # Movement and collision handling
+        self.rect.x += self.vel.x
+        self.handle_x_collisions(platforms)
+        self.rect.y += self.vel.y
+        self.handle_y_collisions(platforms)
+
+        # Ensure zombie stays within bounds
+        self.rect.x = max(0, self.rect.x)
+        self.rect.x = min(WIDTH - ZOMBIE_WIDTH, self.rect.x)
+        self.rect.y = max(0, self.rect.y)
+        self.rect.y = min(HEIGHT - ZOMBIE_HEIGHT, self.rect.y)
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, BLACK, self.rect)
+
+    def collide_with_player(self, player):
+        # Check collision with player
+        return self.rect.colliderect(player.rect)
+
+    def knockback_player(self, player):
+        # Knock back the player horizontally on collision
+        if self.rect.centerx < player.rect.centerx:
+            player.rect.left += ZOMBIE_KNOCKBACK
+        else:
+            player.rect.right -= ZOMBIE_KNOCKBACK
+
+    def handle_x_collisions(self, platforms):
+        # Check and resolve collisions along the x-axis
+        for platform in platforms:
+            if self.rect.colliderect(platform.rect):
+                if self.vel.x > 0:  # Moving right; adjust position to left of platform
+                    self.rect.right = platform.rect.left
+                elif self.vel.x < 0:  # Moving left; adjust position to right of platform
+                    self.rect.left = platform.rect.right
+                self.vel.x = 0
+
+    def handle_y_collisions(self, platforms):
+        # Check and resolve collisions along the y-axis
+        for platform in platforms:
+            if self.rect.colliderect(platform.rect):
+                if self.vel.y > 0:  # Moving down; adjust position to top of platform
+                    self.rect.bottom = platform.rect.top
+                    self.vel.y = 0
+                elif self.vel.y < 0:  # Moving up; adjust position to bottom of platform
+                    self.rect.top = platform.rect.bottom
+                    self.vel.y = 0
+
+    def respawn(self):
+        # Respawn zombie randomly on the screen
+        self.rect.x = random.randint(0, WIDTH - ZOMBIE_WIDTH)
+        self.rect.y = random.randint(0, HEIGHT - ZOMBIE_HEIGHT)
+        self.vel.x = 0
+        self.vel.y = 0
+
+# Platform class
+class Platform(pygame.sprite.Sprite):
+    def __init__(self, x, y, width, height):
+        super().__init__()
+        self.image = pygame.Surface((width, height))
+        self.image.fill(PLATFORM_COLOR)
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
+
+    def draw(self, screen):
+        pygame.draw.rect(screen, PLATFORM_COLOR, self.rect)
+
+# Function to display text on screen
+def draw_text(surface, text, color, rect, font):
+    text_surface = font.render(text, True, color)
+    surface.blit(text_surface, rect)
+
+# Initialize player, zombies, and platforms
+player = Player(WIDTH // 2, HEIGHT // 2)
+zombies = pygame.sprite.Group()
+platform1 = Platform(200, 550, PLATFORM_WIDTH, PLATFORM_HEIGHT)  # Lowered platform position
+platform2 = Platform(400, 400, PLATFORM_WIDTH, PLATFORM_HEIGHT)  # Additional platform
+platforms = pygame.sprite.Group(platform1, platform2)
+
+# Font initialization
+font = pygame.font.Font(None, 18)
+
+# Kill counter
+kill_count = 0
+
+# Game loop
+running = True
+while running:
+    # Events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE or event.key == pygame.K_UP:
+                player.jump()
+
+    # Update
+    player.update()
+
+    # Update zombies
+    for zombie in zombies:
+        zombie.update(player, platforms)
+        if player.collide_with_zombie(zombie):
+            zombie.knockback_player(player)
+        if player.jump_on_zombie(zombie):
+            # Respawn the zombie randomly on screen
+            zombie.respawn()
+            kill_count += 1
+
+    # Spawn new zombies if fewer than 2 exist
+    while len(zombies) < 2:
+        new_zombie = Zombie(random.randint(0, WIDTH - ZOMBIE_WIDTH), random.randint(0, HEIGHT - ZOMBIE_HEIGHT))
+        zombies.add(new_zombie)
+
+    # Draw
+    screen.fill(WHITE)
+    player.draw(screen)
+    for zombie in zombies:
+        zombie.draw(screen)
+    for platform in platforms:
+        platform.draw(screen)
+
+    # Display player's coordinates with sky blue color
+    coord_text = f"Player Pos: ({player.rect.x}, {player.rect.y})"
+    draw_text(screen, coord_text, SKY_BLUE, (10, 10), font)
+
+    # Display kill count
+    kill_text = f"Kills: {kill_count}"
+    draw_text(screen, kill_text, BLACK, (WIDTH - 100, 10), font)
+
+    pygame.display.flip()
+    clock.tick(FPS)
+

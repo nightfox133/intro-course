@@ -1,0 +1,8 @@
+#%%
+import os
+
+directory = '.' #curent derectory
+
+for filename in os.listdir(directory): #prints name of all in folder
+    print(filename)
+# %%

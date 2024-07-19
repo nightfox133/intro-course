@@ -1,0 +1,20 @@
+#%%
+import matplotlib.pyplot as plt 
+import pandas as pd
+import numpy as np
+
+data = pd.read_csv('cereal.csv')
+
+data.columns = data.columns.str.lower()
+
+data['fat'] = pd.to_datetime(data['fat'])
+
+date = data.groupby('fat').sum().reset_index()[['fat', 'rating']]
+
+fig, ax = plt.subplots()
+ax.bar(date.fat, date.rating)
+ax.set_ylabel('Daliy Attendance')
+
+ax.set_xlabel('Year')
+
+# %%

@@ -38,4 +38,8 @@ plt.xticks(y, df.mfr) #x item lables
 plt.hist(df.mfr) #find a way to make it a bar graf
 
 scatter('calories', 'rating')
+
+#fig.savefig = (r"cereal.jpeg")
+
+
 #%%
