@@ -1,0 +1,18 @@
+[
+    {
+        "user_input": "hi",
+        "bot_response": "& C:/Users/marco/AppData/Local/Microsoft/WindowsApps/python3.11.exe c:/Users/marco/.vscode/python/projects/columbia/assingments/json/project/test"
+    },
+    {
+        "user_input": "hello",
+        "bot_response": "hi! how may i help?"
+    },
+    {
+        "user_input": "what is your name",
+        "bot_response": "my name is json"
+    },
+    {
+        "user_input": "end",
+        "bot_response": ""
+    }
+]

@@ -1,0 +1,89 @@
+import json
+import os
+import datetime
+
+"""if you ask it for the time for the first time it freaks out"""
+
+
+# File path for storing conversation history
+conversation_file = r'C:\Users\marco\.vscode\python\projects\columbia\assingments\json\project\history.json'
+
+# Function to load conversation history from JSON file
+def load_conversation():
+    if os.path.exists(conversation_file):
+        with open(conversation_file, 'r') as f:
+            return json.load(f)
+    else:
+        return []
+
+# Function to save conversation history to JSON file
+def save(conversation):
+    with open(conversation_file, 'w') as f:
+        json.dump(conversation, f, indent=4)
+
+# Function to respond to user input
+def respond(user_input, conversation):
+    response = ""
+    # Check if the user input matches any previous input in the conversation history
+    for entry in conversation:
+        if entry['user_input'].lower() == user_input.lower():
+            response = entry['bot_response']
+            break
+    
+    if response == "":
+        if 'what time' in user_input.lower() or 'current time' in user_input.lower():
+            now = datetime.datetime.now()
+            response = f"The current time is {now.strftime('%H:%M')}."
+        else:
+            response = input('Chatbot: I am confused. Do you want to explain? ')
+            if response.lower() in ['yes', 'y']:
+                response = input("Chatbot: How should I respond? ")
+                conversation.append({'user_input': user_input, 'bot_response': response})
+                save(conversation)
+                print("Chatbot: Thanks! I'll remember that.")
+
+    return response
+
+# Function to extract user name from input
+def extract_name(user_input):
+    if 'my name is' in user_input.lower():
+        return user_input.split('my name is', 1)[1].strip()
+    elif 'i am' in user_input.lower():
+        return user_input.split('i am', 1)[1].strip()
+    elif 'im' in user_input.lower():
+        return user_input.split('im', 1)[1].strip()
+    else:
+        return None
+
+# Main function to handle the chat
+def chat():
+    print("Chatbot: Hi! Ask me anything or teach me something new. Type 'quit' to exit.")
+    conversation = load_conversation()
+    
+    user_name = None
+    
+    while True:
+        user_input = input("You: ").strip()
+        
+        if user_input.lower() in ['quit', 'bye', 'end']:
+            if user_name:
+                print(f"Chatbot: Goodbye {user_name}!")
+            else:
+                print("Chatbot: Goodbye!")
+            break
+        
+        if not user_name:
+            extracted_name = extract_name(user_input)
+            if extracted_name:
+                user_name = extracted_name
+                print(f"Chatbot: Hello {user_name}!")
+                continue
+        
+        response = respond(user_input, conversation)
+        print(f"Chatbot: {response}")
+        if 'current time' in user_input.lower() or 'what time' in user_input.lower():
+            save(conversation)
+
+# Run chatbot
+if __name__ == "__main__":
+    chat()

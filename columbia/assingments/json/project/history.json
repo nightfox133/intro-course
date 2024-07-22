@@ -1,0 +1,18 @@
+[
+    {
+        "user_input": "hi",
+        "bot_response": "Hello! how may i help you?"
+    },
+    {
+        "user_input": "what is your name",
+        "bot_response": "my name is json"
+    },
+    {
+        "user_input": "im marco",
+        "bot_response": "hello marco"
+    },
+    {
+        "user_input": "what are you",
+        "bot_response": "i am batman. [evil laugh]~"
+    }
+]
