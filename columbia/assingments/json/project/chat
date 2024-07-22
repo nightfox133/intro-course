@@ -1,0 +1,50 @@
+#%%
+import json
+import os
+
+# Load JSON data
+def load_json(file):
+    with open(file) as bot_responses:
+        print(f"'{file}' Loaded successfully!")
+        return json.load(bot_responses)
+# Store JSON data
+dict = load_json(r'C:\Users\marco\.vscode\python\projects\columbia\assingments\json\project\memory.json')
+
+
+def find(key):
+    for i in range(len(list(dict))-1):
+        Type = list(dict.keys())[i]
+        for k in range(len(dict[Type])):
+            if list(dict[Type])[k] == key:
+                t = list(dict.keys())[i]
+                return [t,k]
+#find('hello')
+def search(Type, index):
+    index = list(dict[Type].keys())[index]
+    return (dict[Type][index])
+#search('greeting', 0)
+def prompt(inp: str):  #dicts with 1 eeliment return None prob!
+        try:
+             return search(find(inp)[0],find(inp)[1])
+        except:
+             return dict['default']
+             
+#main loop
+while True:
+    inp = input("You: ")
+    if inp.lower() == "quit":
+            break
+    print("Bot:", prompt(inp))
+print('\nend')
+
+
+
+
+
+
+
+
+
+
+
+#%%
