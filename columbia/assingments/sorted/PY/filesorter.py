@@ -10,7 +10,7 @@ lookup = {
     'PDFs': ['pdf'],
     'MS': ['docx','doc','pptx','ppt','xls','xlsx'],
     'Audio': ['wav','mp3','flac','aiff'],
-    'PDFs': ['png','jpeg','tiff','gif'],
+    'PDFs': ['png','jpg','tiff','gif', 'pdf'],
     'JSON': ['json'],
     'PY': ['py']
 }
