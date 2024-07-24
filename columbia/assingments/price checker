@@ -1,0 +1,21 @@
+#web scarpeer
+from bs4 import BeautifulSoup
+import requests
+
+url = ''
+
+alt_url = ''
+
+headers = {'': ''}
+
+page = requests.get(url, headers=headers)
+print(response.content)
+
+soup = BeautifulSoup(response.content, 'html.parser')
+
+title = soup.find_all(class_='aok-offscreen')
+#%%
+import pandas as pd
+data = pd.DataFrame()
+
+data['titles'] = [title.text for title in titles]
