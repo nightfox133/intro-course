@@ -1,8 +1,15 @@
 import json
 import os
 import datetime
+import random
 
-""" """
+###
+"""notes: 
+-test rand inputs
+
+
+"""
+###
 
 #File path for mem
 file = r'C:\Users\marco\.vscode\python\projects\columbia\assingments\json\project\history.json'
@@ -27,6 +34,19 @@ def respond(inp, conversation):
     inp = inp.lower()
     # Check if the user input matches any previous input in the conversation history
     for entry in conversation:
+        if inp in ['tell me a joke', 'tell me something', 'tell me a fact']:
+            if 'joke' in inp:
+                   jokes = ['j1', 'j2', 'j3']
+                   r = jokes[random.randint(0,2)]
+                   if entry['user_input'].lower() == r:
+                       response = entry['bot_response']
+                       break
+            else:
+                   facts = ['f1', 'f2', 'f3']
+                   r = facts[random.randint(0,2)]
+                   if entry['user_input'].lower() == r:
+                       response = entry['bot_response']
+                       break
         if entry['user_input'].lower() == inp:
             response = entry['bot_response']
             break
@@ -76,7 +96,7 @@ def chat():
     print("Chatbot: Hi! Ask me anything or teach me something new. Type 'quit' to exit.")
     conversation = load()
     
-    ###
+    ### DO NOT TOUCH!!!! TOOK WAY TOO LONG
     #updates time last ran
     count = 0
     for entry in conversation:
@@ -84,16 +104,16 @@ def chat():
             count += 1
     for i in range(count):
         if i == 0:
-            tL = conversation.pop(-1)
+            tL = conversation.pop(0)
         else:
-            conversation.pop(-1)
-    conversation.append({'user_input': 'last opened', 'bot_response': tL['bot_response']})
+            conversation.pop(0)
+    conversation.insert(0, {'user_input': 'last opened', 'bot_response': tL['bot_response']})
     t = datetime.datetime.now()
     response = f"last opened on {t.strftime('%d/%m/%Y %H:%M')}"
-    conversation.append({'user_input': 'opened at', 'bot_response': response}) 
+    conversation.insert(0, {'user_input': 'opened at', 'bot_response': response}) 
     last(t)
     save(conversation)
-    ###
+    ### DO NOT TOUCH!!!! TOOK WAY TOO LONG
 
     b = None
     user_name = None

@@ -18,7 +18,7 @@ def find(key):
             if list(dict[Type])[k] == key:
                 t = list(dict.keys())[i]
                 return [t,k]
-#find('hello')
+            
 def search(Type, index):
     index = list(dict[Type].keys())[index]
     return (dict[Type][index])

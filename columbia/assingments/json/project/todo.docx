@@ -1,6 +1,12 @@
 wed: 
-    - add do you remeber funtion 
+    - add do you remeber funtion #maybe
     - run lots of inputs
+        - tell me something
+            - 3 random facts that it choises from
+
+        - tell me a joke
+            - What do you call a lazy kangaroo?\n\n A pouch potato.
+        
     - make more human feeling
 
 thu:
