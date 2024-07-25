@@ -2,8 +2,7 @@ wed:
 
 
 thu:
-    - write paper
-    - put into latex
+    - write readme
     - flask web to run on
     - test
     - submit
