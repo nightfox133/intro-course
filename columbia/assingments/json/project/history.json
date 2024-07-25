@@ -1,11 +1,11 @@
 [
     {
         "user_input": "opened at",
-        "bot_response": "Last opened on 25/07/2024 11:59"
+        "bot_response": "last opened on 25/07/2024 16:26"
     },
     {
         "user_input": "last opened",
-        "bot_response": "Last opened on 25/07/2024 11:59"
+        "bot_response": "last opened on 25/07/2024 16:25"
     },
     {
         "user_input": "im marco",
@@ -118,5 +118,17 @@
     {
         "user_input": "haha",
         "bot_response": "i know!"
+    },
+    {
+        "user_input": "nice",
+        "bot_response": "yeah"
+    },
+    {
+        "user_input": "who are you",
+        "bot_response": "batman! [evil laugh]~"
+    },
+    {
+        "user_input": "im good",
+        "bot_response": "thats great!"
     }
 ]

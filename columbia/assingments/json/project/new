@@ -1,0 +1,4 @@
+import subprocess
+
+# Open a new Command Prompt window and run a command
+subprocess.Popen('start cmd /k echo Hello, World!', shell=True)
