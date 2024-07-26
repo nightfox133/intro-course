@@ -1,0 +1,26 @@
+name
+fact
+joke
+haha
+show rand
+- j1 j2 j3
+
+time 
+mem time files
+date
+do you have a hobby
+whats your fav book
+cool
+
+what are you 
+#explain if it doesn't know somthing you csn just teach it
+#example
+#show
+
+bye
+#show bye name
+
+#close program 
+#run to show saved mem
+
+//done
