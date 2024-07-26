@@ -1,11 +1,11 @@
 [
     {
         "user_input": "opened at",
-        "bot_response": "last opened on 25/07/2024 16:29"
+        "bot_response": "last opened on 25/07/2024 20:04"
     },
     {
         "user_input": "last opened",
-        "bot_response": "last opened on 25/07/2024 16:29"
+        "bot_response": "last opened on 25/07/2024 20:01"
     },
     {
         "user_input": "im marco",
@@ -130,5 +130,21 @@
     {
         "user_input": "im good",
         "bot_response": "thats great!"
+    },
+    {
+        "user_input": "what do you like to be called?",
+        "bot_response": "yes"
+    },
+    {
+        "user_input": "what do you want to be called",
+        "bot_response": "json"
+    },
+    {
+        "user_input": "what's your gender?",
+        "bot_response": "As a chatbot, I don't identify as any gender.  What a human concept."
+    },
+    {
+        "user_input": "who created you?",
+        "bot_response": "Obviously, god...a coding god."
     }
 ]
