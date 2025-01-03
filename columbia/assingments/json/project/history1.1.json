@@ -1,10 +1,14 @@
 [
     {
         "user_input": "opened at",
-        "bot_response": "Last opened on 25/07/2024 16:10"
+        "bot_response": "Last opened on 25/10/2024 21:57"
     },
     {
         "user_input": "last opened",
-        "bot_response": "Last opened on 25/07/2024 16:09"
+        "bot_response": "Last opened on 25/07/2024 16:10"
+    },
+    {
+        "user_input": "hi",
+        "bot_response": "& C:/Users/marco/AppData/Local/Microsoft/WindowsApps/python3.11.exe c:/Users/marco/.vscode/python/projects/columbia/assingments/json/project/Chat.py"
     }
 ]

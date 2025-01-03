@@ -1,11 +1,11 @@
 [
     {
         "user_input": "opened at",
-        "bot_response": "last opened on 25/07/2024 20:04"
+        "bot_response": "last opened on 25/10/2024 21:57"
     },
     {
         "user_input": "last opened",
-        "bot_response": "last opened on 25/07/2024 20:01"
+        "bot_response": "last opened on 26/07/2024 09:15"
     },
     {
         "user_input": "im marco",
@@ -146,5 +146,9 @@
     {
         "user_input": "who created you?",
         "bot_response": "Obviously, god...a coding god."
+    },
+    {
+        "user_input": "whats your fav color",
+        "bot_response": "red"
     }
 ]
